@@ -10,7 +10,23 @@ const users = {
 };
 
 module.exports.login = (req, res, next) => {
-  res.status(200).send('ok');
+  // отримати дані { email, password}
+  const { body } = req;
+  // чи існує користувач з імейлом
+  if (!(body.email in users)) {
+    // якщо ні, то помилка
+    return next(createHttpError(404, 'User is not exist'));
+  }
+  // якщо так
+  //   чи співпадає пароль
+  if (body.password !== users[body.email]?.password) {
+    //      ні - помилка
+    return next(createHttpError(401, 'Email or passwors is incorrect'));
+  }
+  //      так - відправити його дані {id, name, email}
+  const prepatedUser = { ...users[body.email] };
+  delete prepatedUser.password;
+  res.status(200).send(prepatedUser);
 };
 
 module.exports.signUp = (req, res, next) => {

@@ -1,4 +1,33 @@
-GET http://localhost:5000/login HTTP/1.1 
+### 200 {}
+
+POST http://localhost:5000/login HTTP/1.1 
+Content-Type: application/json
+
+{
+    "email": "user1@com",
+    "password": "123456"
+}
+
+### 404
+
+POST http://localhost:5000/login HTTP/1.1 
+Content-Type: application/json
+
+{
+    "email": "user@com",
+    "password": "123456"
+}
+
+### 401
+
+POST http://localhost:5000/login HTTP/1.1 
+Content-Type: application/json
+
+{
+    "email": "user1@com",
+    "password": "123"
+}
+
 
 ###  201 {}
 
